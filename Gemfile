@@ -15,6 +15,7 @@ gem "bootsnap", require: false            # Reduces boot times through caching; 
 
 gem 'redis', '~> 4.8.1'
 gem 'sidekiq'
+gem "graphql", "~> 2.4"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
@@ -27,6 +28,7 @@ end
 group :development do
   gem "web-console"
   gem 'annotate'
+  gem "graphiql-rails"
 end
 
 group :test do
@@ -35,6 +37,3 @@ group :test do
   gem 'rspec-sidekiq'
   gem 'rails-controller-testing'
 end
-
-gem "graphql", "~> 2.4"
-gem "graphiql-rails", group: :development
