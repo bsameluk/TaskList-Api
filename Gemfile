@@ -4,7 +4,7 @@ ruby "3.3.0"
 
 gem "rails", "~> 7.1.3", ">= 7.1.3.3"     # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "sprockets-rails"                     # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sqlite3", ">= 1.4"
+gem "mysql2", "~> 0.5.6"
 gem "puma", ">= 5.0"                      # Use the Puma web server [https://github.com/puma/puma]
 gem "importmap-rails"                     # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "turbo-rails"                         # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -16,6 +16,8 @@ gem "bootsnap", require: false            # Reduces boot times through caching; 
 gem 'redis', '~> 4.8.1'
 gem 'sidekiq'
 gem "graphql", "~> 2.4"
+gem 'rack-cors'
+gem 'ruby-clock'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]

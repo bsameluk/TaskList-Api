@@ -2,11 +2,11 @@
 #
 # Table name: tasks
 #
-#  id         :integer          not null, primary key
-#  name       :string
+#  id         :bigint           not null, primary key
+#  name       :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  project_id :integer          not null
+#  project_id :bigint           not null
 #
 # Indexes
 #
@@ -14,7 +14,7 @@
 #
 # Foreign Keys
 #
-#  project_id  (project_id => projects.id)
+#  fk_rails_...  (project_id => projects.id)
 #
 class Task < ApplicationRecord
   belongs_to :project

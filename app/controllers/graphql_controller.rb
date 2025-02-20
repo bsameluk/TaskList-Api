@@ -15,13 +15,13 @@ class GraphqlController < ApplicationController
   def prepare_variables(variables_param)
     case variables_param
     when String
-      JSON.parse(variables_param) || {}
+      JSON.parse(variables_param) rescue {}
+    when ActionController::Parameters
+      variables_param.to_unsafe_h
     when Hash
       variables_param
-    when nil
-      {}
     else
-      raise ArgumentError, "Unexpected parameter: #{variables_param}"
+      {}
     end
   end
 

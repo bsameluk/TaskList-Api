@@ -1,0 +1,78 @@
+version: "1.0"
+
+services:
+  app:
+    build:
+      context: .
+    image: task_list_app_api:latest
+    container_name: task_list_app_api
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: "mysql2://root:password@db:3306/task_list_app_api_development"
+      REDIS_URL: "redis://redis:6379/0"
+    depends_on:
+      - db
+      - redis
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
+
+  sidekiq:
+    build:
+      context: .
+    image: task_list_app_api:latest
+    container_name: sidekiq
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - redis
+      - db
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: "mysql2://root:password@db:3306/task_list_app_api_development"
+    command: bundle exec sidekiq
+
+  db:
+    image: mysql:8.0
+    container_name: task_list_app_api_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: task_list_app_api_development
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7
+    container_name: task_list_app_api_redis
+    ports:
+      - "6379:6379"
+
+  clockwork:
+    build:
+      context: .
+    image: task_list_app_api:latest
+    container_name: task_list_app_api_clockwork
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - redis
+      - db
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: "mysql2://root:password@db:3306/task_list_app_api_development"
+    command: bundle exec clock
+
+volumes:
+  db_data:
+  gems:
+  bundle_cache:

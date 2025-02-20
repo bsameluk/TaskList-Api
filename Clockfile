@@ -1,0 +1,10 @@
+require 'bundler/setup'
+require 'ruby-clock'
+require './config/boot'
+require './config/environment'
+
+using RubyClock::DSL
+
+every('2 minutes') do
+  InitTasksJob.perform_later
+end

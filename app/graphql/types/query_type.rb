@@ -6,34 +6,17 @@ module Types
       description "List of all projects"
     end
 
-    field :project, Types::ProjectType, null: false do
-      description "Get project by ID"
-      argument :id, ID, required: true
-    end
-
     field :tasks, [Types::TaskType], null: false do
-      description "List of all tasks"
-    end
-
-    field :task, Types::TaskType, null: false do
-      description "Get task by ID"
-      argument :id, ID, required: true
+      description "List of tasks by project ID"
+      argument :project_id, GraphQL::Types::String, required: true, camelize: false
     end
 
     def projects
       Project.includes(:tasks).all
     end
 
-    def project(id:)
-      Project.includes(:tasks).find(id)
-    end
-
-    def tasks
-      Task.all
-    end
-
-    def task(id:)
-      Task.find(id)
+    def tasks(project_id: nil)
+      Task.where(project_id: project_id)
     end
   end
 end

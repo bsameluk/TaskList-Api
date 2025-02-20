@@ -9,19 +9,19 @@
 #   end
 
 
-Project.create(name: "Google").tap do |project|
-  project.tasks.create(name: "Create Youtube")
-  project.tasks.create(name: "Create Google Drive")
-  project.tasks.create(name: "Create Google Docs")
+Project.find_or_create_by(name: "Google").tap do |project|
+  project.tasks.find_or_create_by(name: "Create Youtube")
+  project.tasks.find_or_create_by(name: "Create Google Drive")
+  project.tasks.find_or_create_by(name: "Create Google Docs")
 end
 
-Project.create(name: "Facebook").tap do |project|
-  project.tasks.create(name: "Create Facebook Ads")
-  project.tasks.create(name: "Create Facebook Page")
-  project.tasks.create(name: "Rename it to Meta")
+Project.find_or_create_by(name: "Facebook").tap do |project|
+  project.tasks.find_or_create_by(name: "Create Facebook Ads")
+  project.tasks.find_or_create_by(name: "Create Facebook Page")
+  project.tasks.find_or_create_by(name: "Rename it to Meta")
 end
 
-Project.create(name: "Twitter").tap do |project|
+Project.find_or_create_by(name: "Twitter").tap do |project|
   project.tasks.create(name: "Create Twitter Ads")
   project.tasks.create(name: "Create Twitter Page")
   project.tasks.create(name: "Sell it to Elon Musk")
