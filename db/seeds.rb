@@ -9,20 +9,17 @@
 #   end
 
 
-Project.find_or_create_by(name: "Google").tap do |project|
-  project.tasks.find_or_create_by(name: "Create Youtube")
-  project.tasks.find_or_create_by(name: "Create Google Drive")
-  project.tasks.find_or_create_by(name: "Create Google Docs")
-end
+google_project = Project.find_or_create_by(name: "Google")
+Task.find_or_create_by(name: "Create Youtube",      project: google_project)
+Task.find_or_create_by(name: "Create Google Drive", project: google_project)
+Task.find_or_create_by(name: "Create Google Docs",  project: google_project)
 
-Project.find_or_create_by(name: "Facebook").tap do |project|
-  project.tasks.find_or_create_by(name: "Create Facebook Ads")
-  project.tasks.find_or_create_by(name: "Create Facebook Page")
-  project.tasks.find_or_create_by(name: "Rename it to Meta")
-end
+facebook_project = Project.find_or_create_by(name: "Facebook")
+Task.find_or_create_by(name: "Create Facebook Ads",      project: facebook_project)
+Task.find_or_create_by(name: "Create Facebook Page",     project: facebook_project)
+Task.find_or_create_by(name: "Rename it to Meta",        project: facebook_project)
 
-Project.find_or_create_by(name: "Twitter").tap do |project|
-  project.tasks.create(name: "Create Twitter Ads")
-  project.tasks.create(name: "Create Twitter Page")
-  project.tasks.create(name: "Sell it to Elon Musk")
-end
+twitter_project = Project.find_or_create_by(name: "Twitter")
+Task.find_or_create_by(name: "Create Twitter Ads",      project: twitter_project)
+Task.find_or_create_by(name: "Create Twitter Page",     project: twitter_project)
+Task.find_or_create_by(name: "Sell it to Elon Musk",    project: twitter_project)

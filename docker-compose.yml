@@ -1,6 +1,17 @@
 version: "1.0"
 
 services:
+  setup:
+    build:
+      context: .
+    image: task_list_app_api_setup:latest
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: "mysql2://root:password@db:3306/task_list_app_api_development"
+    command: bash -c "bundle exec rails db:create db:migrate db:seed"
+
   app:
     build:
       context: .
