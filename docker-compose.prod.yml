@@ -36,6 +36,29 @@ services:
       - redis
     command: bundle exec rails server -b 0.0.0.0 -p 3000
 
+  sidekiq:
+    build:
+      context: .
+    image: task_list_app_api_prod:latest
+    container_name: task_list_app_api_prod_sidekiq
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      RAILS_ENV: production
+      REDIS_URL: "redis://redis:6379/0"
+      DATABASE_URL: "mysql2://root:${DB_PASSWORD}@db:3306/task_list_app_api_production"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DB_PASSWORD: ${DB_PASSWORD}
+      RAILS_LOG_TO_STDOUT: "true"
+    command: bundle exec sidekiq
+    restart: unless-stopped
+
   ruby_clock:
     build:
       context: .
@@ -45,8 +68,9 @@ services:
       - .:/app
       - bundle_cache:/usr/local/bundle
     depends_on:
-      db:
-        condition: service_healthy
+      - redis
+      - db
+      - sidekiq
     environment:
       RAILS_ENV: production
       REDIS_URL: "redis://redis:6379/0"
