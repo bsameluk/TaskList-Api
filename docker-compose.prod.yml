@@ -68,6 +68,18 @@ services:
     image: redis:7
     container_name: task_list_app_api_prod_redis
 
+  nginx:
+    image: nginx:latest
+    container_name: task_list_app_api_prod_nginx
+    depends_on:
+      - app
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
 volumes:
   db_data:
   bundle_cache:
