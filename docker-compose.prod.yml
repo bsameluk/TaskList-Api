@@ -39,7 +39,7 @@ services:
   clockwork:
     build:
       context: .
-    image: task_list_app_api_prod_clockwork:latest
+    image: task_list_app_api_prod:latest
     container_name: task_list_app_api_prod_clockwork
     volumes:
       - .:/app
